@@ -110,4 +110,8 @@ public class BeerServiceImpl implements BeerService {
         return beerMapper.beerToBeerDto(beerRepository.findByUpc(upc));
     }
 
+    @Override
+    public void deleteBeerById(UUID beerId) {
+        beerRepository.deleteById(beerId);
+    }
 }
