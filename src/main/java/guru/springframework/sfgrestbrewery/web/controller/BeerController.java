@@ -5,6 +5,8 @@ import guru.springframework.sfgrestbrewery.web.model.BeerDto;
 import guru.springframework.sfgrestbrewery.web.model.BeerPagedList;
 import guru.springframework.sfgrestbrewery.web.model.v2.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-04-20.
  */
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
 @RestController
@@ -86,7 +89,12 @@ public class BeerController {
     @DeleteMapping("beer/{beerId}")
     public ResponseEntity<Void> deleteBeerById(@PathVariable("beerId") UUID beerId){
 
-        beerService.deleteBeerById(beerId);
+        try {
+            beerService.deleteBeerById(beerId);
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException){
+            log.debug("Beer id Not Found: {}", beerId.toString());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
