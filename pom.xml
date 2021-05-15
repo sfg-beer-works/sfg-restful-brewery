@@ -159,5 +159,7 @@
 
     <scm>
         <url>https://github.com/sfg-beer-works/sfg-restful-brewery</url>
+        <connection>scm:git:git@github.com:sfg-beer-works/sfg-restful-brewery</connection>
+        <developerConnection>scm:git:git@github.com:sfg-beer-works/sfg-restful-brewery</developerConnection>
     </scm>
 </project>
